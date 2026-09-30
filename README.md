@@ -1,9 +1,5 @@
 <div align="center">
-<img src="./assets/banner.jfif" alt="Razerware banner" width="800">
-  
-# 🎮 Razerware
-
-### **Your Gaming Arsenal.**
+<img src="./assets/banner.jfif" alt="Razerware banner" width="1200">
 
 *Your next gaming setup, picked with the help of an AI that actually knows hardware.*
 
