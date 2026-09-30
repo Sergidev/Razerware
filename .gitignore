@@ -1,0 +1,23 @@
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Python / Django
+.venv/
+venv/
+__pycache__/
+*.pyc
+db.sqlite3
+staticfiles/
+
+# Node / Angular
+node_modules/
+client/dist/
+client/.angular/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
