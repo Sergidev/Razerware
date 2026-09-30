@@ -2,7 +2,7 @@
 
 # 🎮 Razerware
 
-### **Gear Up. Plug In. Dominate.**
+### **Your Gaming Arsenal.**
 
 *Your next gaming setup, picked with the help of an AI that actually knows hardware.*
 
