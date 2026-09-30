@@ -48,12 +48,12 @@ The Gemini API key lives only on the server, never in the client.
 
 | Layer | Technology |
 |---|---|
-| Frontend | React, Vite, Bootstrap, React Router |
-| Backend | Node.js, Express |
+| Frontend | Angular, TypeScript, Bootstrap |
+| Backend | Python, Django, Django REST Framework |
 | Database | PostgreSQL |
 | AI | Google Gemini API |
 | Environment | GitHub Codespaces + Dev Containers |
-| Deployment | Vercel · Render · Neon *(planned)* |
+| Deployment | Vercel · Render |
 
 ## 📸 Screenshots
 
