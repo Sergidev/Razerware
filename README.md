@@ -1,5 +1,6 @@
 <div align="center">
-
+<img src="./assets/banner.jfif" alt="Razerware banner" width="800">
+  
 # 🎮 Razerware
 
 ### **Your Gaming Arsenal.**
@@ -7,9 +8,9 @@
 *Your next gaming setup, picked with the help of an AI that actually knows hardware.*
 
 ![Status](https://img.shields.io/badge/status-in%20development-orange)
-![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
+![Angular](https://img.shields.io/badge/Angular-DD0031?logo=angular&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?logo=bootstrap&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white)
+![Django](https://img.shields.io/badge/Django-092E20?logo=django&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
 ![Gemini](https://img.shields.io/badge/Gemini%20AI-8E75B2?logo=googlegemini&logoColor=white)
 
@@ -54,10 +55,6 @@ The Gemini API key lives only on the server, never in the client.
 | AI | Google Gemini API |
 | Environment | GitHub Codespaces + Dev Containers |
 | Deployment | Vercel · Render |
-
-## 📸 Screenshots
-
-*Coming soon.*
 
 ---
 
