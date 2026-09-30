@@ -3,7 +3,6 @@
 
 *Your next gaming setup, picked with the help of an AI that actually knows hardware.*
 
-![Status](https://img.shields.io/badge/status-in%20development-orange)
 ![Angular](https://img.shields.io/badge/Angular-DD0031?logo=angular&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?logo=bootstrap&logoColor=white)
 ![Django](https://img.shields.io/badge/Django-092E20?logo=django&logoColor=white)
