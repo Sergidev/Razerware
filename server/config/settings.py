@@ -11,11 +11,17 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
 
+
+def env_list(name, default=""):
+    """Read a comma-separated environment variable as a clean list."""
+    return [v.strip() for v in os.environ.get(name, default).split(",") if v.strip()]
+
+
 SECRET_KEY = os.environ.get("SECRET_KEY", "change-me")
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".app.github.dev"]
-CSRF_TRUSTED_ORIGINS = ["https://*.app.github.dev"]
+ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", "localhost,127.0.0.1,.app.github.dev")
+CSRF_TRUSTED_ORIGINS = ["https://*.app.github.dev"] + env_list("CSRF_ORIGINS")
 
 
 # Application definition
@@ -35,6 +41,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -94,9 +101,10 @@ USE_TZ = True
 # Static files
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 # CORS
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:4200"]
+CORS_ALLOWED_ORIGINS = env_list("CORS_ALLOWED_ORIGINS", "http://localhost:4200")
 CORS_ALLOWED_ORIGIN_REGEXES = [r"^https://.*\.app\.github\.dev$"]
