@@ -3,31 +3,43 @@ import { HealthService } from './health.service';
 
 @Component({
   selector: 'app-root',
-  template: `
-    <main class="container py-5 text-center">
-      <h1>Razerware</h1>
-      <p class="lead">
-        API status:
-        <span class="badge" [class]="ok() ? 'text-bg-success' : 'text-bg-danger'">
-          {{ status() }}
-        </span>
-      </p>
-    </main>
-  `,
+  templateUrl: './app.html',
+  styleUrl: './app.scss',
 })
 export class App {
   private health = inject(HealthService);
 
-  status = signal('checking...');
-  ok = signal(false);
+  menuOpen = signal(false);
+  apiStatus = signal<'checking' | 'online' | 'offline'>('checking');
+
+  navLinks = ['Home', 'Products', 'AI Advisor', 'About'];
+
+  features = [
+    {
+      icon: '🤖',
+      title: 'AI Hardware Advisor',
+      text: 'Tell our Gemini-powered assistant what you play and your budget. It recommends real products from the catalog.',
+    },
+    {
+      icon: '🖥️',
+      title: 'Gaming-first Catalog',
+      text: 'Pre-built rigs, laptops and components with detailed specs, filters and instant search.',
+    },
+    {
+      icon: '🛒',
+      title: 'Full Shopping Flow',
+      text: 'Accounts, cart and a simulated checkout, so you can try the whole experience end to end.',
+    },
+  ];
 
   constructor() {
     this.health.getHealth().subscribe({
-      next: (res) => {
-        this.status.set(res.status);
-        this.ok.set(res.status === 'ok');
-      },
-      error: () => this.status.set('unreachable'),
+      next: (res) => this.apiStatus.set(res.status === 'ok' ? 'online' : 'offline'),
+      error: () => this.apiStatus.set('offline'),
     });
+  }
+
+  toggleMenu() {
+    this.menuOpen.update((v) => !v);
   }
 }

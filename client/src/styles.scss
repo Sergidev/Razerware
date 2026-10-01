@@ -1,4 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --rw-bg: #0a0b0f;
+  --rw-surface: #12141b;
+  --rw-border: #232736;
+  --rw-accent: #d62c43;   // change this to match your banner's palette
+  --rw-text: #e8eaf0;
+  --rw-muted: #8b91a5;
+}
 
-/* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
+html, body {
+  margin: 0;
+  background: var(--rw-bg);
+  color: var(--rw-text);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  scroll-behavior: smooth;
+}
