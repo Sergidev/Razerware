@@ -1,5 +1,5 @@
 <div align="center">
-<img src="./assets/bannerRazerware.jfif" alt="Razerware banner" width="1920">
+<img src="./client/public/images/bannerRazerware.jpeg" alt="Razerware banner" width="1920">
 
 *Your next gaming setup, picked with the help of an AI that actually knows hardware.*
 
