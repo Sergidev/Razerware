@@ -1,12 +1,33 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { HealthService } from './health.service';
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.scss',
-  templateUrl: './app.html',
+  template: `
+    <main class="container py-5 text-center">
+      <h1>Razerware</h1>
+      <p class="lead">
+        API status:
+        <span class="badge" [class]="ok() ? 'text-bg-success' : 'text-bg-danger'">
+          {{ status() }}
+        </span>
+      </p>
+    </main>
+  `,
 })
 export class App {
-  protected readonly title = signal('client');
+  private health = inject(HealthService);
+
+  status = signal('checking...');
+  ok = signal(false);
+
+  constructor() {
+    this.health.getHealth().subscribe({
+      next: (res) => {
+        this.status.set(res.status);
+        this.ok.set(res.status === 'ok');
+      },
+      error: () => this.status.set('unreachable'),
+    });
+  }
 }
