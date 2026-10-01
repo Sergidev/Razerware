@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'https://CHANGE-ME.onrender.com/api',
+  apiUrl: 'https://razerware.onrender.com/api',
 };
