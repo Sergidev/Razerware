@@ -1,0 +1,11 @@
+//Django
+
+cd /workspaces/Razerware/server
+source .venv/bin/activate
+python manage.py runserver
+
+
+//Angular
+
+cd /workspaces/Razerware/client
+ng serve
