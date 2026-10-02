@@ -307,4 +307,11 @@ $accent: var(--rw-accent);
 
   .navbar-inner { gap: 1rem; }
   .brand { margin-right: auto; }
+
+
+  .hero {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+}
 }
