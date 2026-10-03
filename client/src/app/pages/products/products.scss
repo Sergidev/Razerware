@@ -1,0 +1,62 @@
+.shop { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+h1 { font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; }
+
+.toolbar { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem; }
+.search, .sort {
+  background: var(--rw-surface);
+  border: 1px solid var(--rw-border);
+  color: var(--rw-text);
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  &:focus { outline: none; border-color: var(--rw-accent); }
+}
+.search { flex: 1; min-width: 220px; }
+
+.chips, .pager { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.75rem; }
+.pager { justify-content: center; margin-top: 2rem; }
+.chip {
+  background: var(--rw-surface);
+  border: 1px solid var(--rw-border);
+  color: var(--rw-muted);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover { color: #fff; border-color: var(--rw-accent); }
+  &.active { background: var(--rw-accent); border-color: var(--rw-accent); color: #fff; }
+}
+
+.state { color: var(--rw-muted); text-align: center; padding: 3rem 0; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; }
+
+.card-p {
+  display: block;
+  background: var(--rw-surface);
+  border: 1px solid var(--rw-border);
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  &:hover {
+    transform: translateY(-6px);
+    border-color: var(--rw-accent);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  }
+}
+.img-wrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #0d0f15;
+  img { width: 100%; height: 100%; object-fit: cover; }
+}
+.badge-out {
+  position: absolute; top: 10px; left: 10px;
+  background: rgba(0, 0, 0, 0.75); color: #ff8a8a;
+  font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 6px;
+}
+.card-body { padding: 1rem 1.1rem 1.25rem; }
+.cat { font-size: 0.75rem; color: var(--rw-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+h3 { font-size: 1.05rem; margin: 0.35rem 0 0.6rem; }
+.price { font-weight: 800; font-size: 1.2rem; color: var(--rw-accent); }

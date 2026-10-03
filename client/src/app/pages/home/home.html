@@ -1,0 +1,31 @@
+<section class="hero">
+  <img class="hero-img" src="images/bannerRazerware.jpeg" alt="Razerware banner" />
+  <div class="hero-overlay"></div>
+</section>
+
+<section class="intro">
+  <span class="pill"><span class="dot"></span> Under construction</span>
+  <h1>Gear Up. Plug In. <span class="brand-accent">Dominate.</span></h1>
+  <p>
+    The gaming hardware store with an AI advisor that actually knows hardware.
+    Something big is loading.
+  </p>
+  <div class="hero-buttons">
+    <a routerLink="/products" class="btn-glow">Explore the catalog</a>
+    <button type="button" class="btn-outline">Meet the AI advisor</button>
+  </div>
+</section>
+
+<section class="features">
+  <h2>What's coming</h2>
+  <div class="feature-grid">
+    @for (f of features; track f.title) {
+      <article class="feature-card">
+        <div class="feature-icon">{{ f.icon }}</div>
+        <h3>{{ f.title }}</h3>
+        <p>{{ f.text }}</p>
+        <span class="tag">In development</span>
+      </article>
+    }
+  </div>
+</section>

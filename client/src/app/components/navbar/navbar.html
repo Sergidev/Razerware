@@ -1,0 +1,21 @@
+<header class="navbar-rw">
+  <div class="navbar-inner">
+    <a class="brand" routerLink="/">
+      <span class="brand-mark">▲</span> RAZER<span class="brand-accent">WARE</span>
+    </a>
+
+    <nav class="nav-links" [class.open]="menuOpen()">
+      <a class="nav-link-rw" routerLink="/" routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }" (click)="close()">Home</a>
+      <a class="nav-link-rw" routerLink="/products" routerLinkActive="active" (click)="close()">Products</a>
+      <button type="button" class="nav-link-rw">AI Advisor</button>
+      <button type="button" class="nav-link-rw">About</button>
+    </nav>
+
+    <div class="nav-actions">
+      <button type="button" class="btn-ghost">Log in</button>
+      <button type="button" class="btn-glow small">Cart (0)</button>
+      <button type="button" class="burger" (click)="toggleMenu()" aria-label="Toggle menu">☰</button>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,37 @@
+<section class="detail">
+  <a routerLink="/products" class="back">← Back to products</a>
+
+  @if (loading()) {
+    <p class="state">Loading...</p>
+  } @else if (notFound() || !product()) {
+    <p class="state">Product not found.</p>
+  } @else {
+    @let p = product()!;
+    <div class="layout">
+      <div class="img-box"><img [src]="p.image" [alt]="p.name" /></div>
+
+      <div class="info">
+        <span class="cat">{{ p.category_name }} · {{ p.brand }}</span>
+        <h1>{{ p.name }}</h1>
+        <div class="price">{{ p.price }} €</div>
+
+        @if (p.stock > 0) {
+          <span class="stock ok">In stock ({{ p.stock }})</span>
+        } @else {
+          <span class="stock out">Out of stock</span>
+        }
+
+        <p class="desc">{{ p.description }}</p>
+
+        <button type="button" class="btn-glow" [disabled]="p.stock === 0">Add to cart</button>
+
+        <h2>Specifications</h2>
+        <table class="specs">
+          @for (s of p.specs | keyvalue; track s.key) {
+            <tr><th>{{ s.key }}</th><td>{{ s.value }}</td></tr>
+          }
+        </table>
+      </div>
+    </div>
+  }
+</section>
