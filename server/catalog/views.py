@@ -26,7 +26,8 @@ class ProductListView(generics.ListAPIView):
         params = self.request.query_params
 
         if category := params.get("category"):
-            qs = qs.filter(category__slug=category)
+            slugs = [s.strip() for s in category.split(",") if s.strip()]
+            qs = qs.filter(category__slug__in=slugs)
         if brand := params.get("brand"):
             qs = qs.filter(brand__iexact=brand)
         if min_price := params.get("min_price"):

@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CatalogService } from '../../catalog.service';
+import { Product } from '../../models';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +10,24 @@ import { RouterLink } from '@angular/router';
   styleUrl: './home.scss',
 })
 export class Home {
-  features = [
-    { icon: '🤖', title: 'AI Hardware Advisor', text: 'Tell our Gemini-powered assistant what you play and your budget. It recommends real products from the catalog.' },
-    { icon: '🖥️', title: 'Gaming-first Catalog', text: 'Pre-built rigs, laptops and components with detailed specs, filters and instant search.' },
-    { icon: '🛒', title: 'Full Shopping Flow', text: 'Accounts, cart and a simulated checkout, so you can try the whole experience end to end.' },
-  ];
+  private catalog = inject(CatalogService);
+
+  topProducts = signal<Product[]>([]);
+  loading = signal(true);
+  error = signal(false);
+
+  constructor() {
+    this.catalog
+      .getProducts({ category: 'desktops,laptops', ordering: '-price' })
+      .subscribe({
+        next: (res) => {
+          this.topProducts.set(res.results.slice(0, 5));
+          this.loading.set(false);
+        },
+        error: () => {
+          this.error.set(true);
+          this.loading.set(false);
+        },
+      });
+  }
 }

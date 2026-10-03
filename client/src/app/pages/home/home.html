@@ -1,5 +1,5 @@
 <section class="hero">
-  <img class="hero-img" src="images/bannerRazerware.jpeg" alt="Razerware banner" />
+  <img class="hero-img" src="images/banner.jpg" alt="Razerware banner" />
   <div class="hero-overlay"></div>
 </section>
 
@@ -8,7 +8,6 @@
   <h1>Gear Up. Plug In. <span class="brand-accent">Dominate.</span></h1>
   <p>
     The gaming hardware store with an AI advisor that actually knows hardware.
-    Something big is loading.
   </p>
   <div class="hero-buttons">
     <a routerLink="/products" class="btn-glow">Explore the catalog</a>
@@ -16,16 +15,28 @@
   </div>
 </section>
 
-<section class="features">
-  <h2>What's coming</h2>
-  <div class="feature-grid">
-    @for (f of features; track f.title) {
-      <article class="feature-card">
-        <div class="feature-icon">{{ f.icon }}</div>
-        <h3>{{ f.title }}</h3>
-        <p>{{ f.text }}</p>
-        <span class="tag">In development</span>
-      </article>
-    }
+<section class="top">
+  <div class="top-head">
+    <h2>Top of the range</h2>
+    <a routerLink="/products" class="see-all">See all products →</a>
   </div>
+
+  @if (error()) {
+    <p class="state">Could not load products. The server may be waking up, try again in a few seconds.</p>
+  } @else if (loading()) {
+    <p class="state">Loading products...</p>
+  } @else {
+    <div class="top-grid">
+      @for (p of topProducts(); track p.id) {
+        <a class="card-p" [routerLink]="['/products', p.slug]">
+          <div class="img-wrap"><img [src]="p.image" [alt]="p.name" loading="lazy" /></div>
+          <div class="card-body">
+            <span class="cat">{{ p.category_name }}</span>
+            <h3>{{ p.name }}</h3>
+            <div class="price">{{ p.price }} €</div>
+          </div>
+        </a>
+      }
+    </div>
+  }
 </section>
