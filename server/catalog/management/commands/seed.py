@@ -80,11 +80,11 @@ KEYBOARDS = [
 
 # (model, brand, sound, microphone, connection, battery, price)
 HEADSETS = [
-    ("Echo One", "Steelseries", "Stereo", "Detachable boom", "Wired USB / 3.5 mm", "N/A (wired)", 59.99),
-    ("Omega", "Raptor", "Virtual 7.1 surround", "Retractable boom", "Wired USB", "N/A (wired)", 79.99),
-    ("Cosmo", "Aurora", "Stereo", "Detachable boom", "Wireless 2.4 GHz", "40 h", 129.99),
     ("Neon X Pro", "Steelseries", "Spatial audio", "Retractable boom", "Wireless 2.4 GHz / Bluetooth", "60 h", 199.99),
+    ("Omega", "Raptor", "Virtual 7.1 surround", "Retractable boom", "Wired USB", "N/A (wired)", 79.99),
     ("Exodus Ultimate Pro", "Aurora", "Stereo with active noise cancelling", "Beamforming mics", "Bluetooth / 2.4 GHz", "50 h", 249.99),
+    ("Cosmo", "Aurora", "Stereo", "Detachable boom", "Wireless 2.4 GHz", "40 h", 129.99),
+    ("Echo One", "Steelseries", "Stereo", "Detachable boom", "Wired USB / 3.5 mm", "N/A (wired)", 59.99),
 ]
 
 
