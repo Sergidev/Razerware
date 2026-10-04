@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CatalogService } from '../../catalog.service';
 import { Category, Product } from '../../models';
 
@@ -11,6 +11,8 @@ import { Category, Product } from '../../models';
 })
 export class Products {
   private catalog = inject(CatalogService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   categories = signal<Category[]>([]);
   products = signal<Product[]>([]);
@@ -28,7 +30,15 @@ export class Products {
 
   constructor() {
     this.catalog.getCategories().subscribe((c) => this.categories.set(c));
-    this.load();
+
+    // Every time the URL query params change, read them and reload
+    this.route.queryParamMap.subscribe((params) => {
+      this.selectedCategory.set(params.get('category') ?? '');
+      this.search.set(params.get('search') ?? '');
+      this.ordering.set(params.get('ordering') ?? 'name');
+      this.page.set(Number(params.get('page') ?? 1));
+      this.load();
+    });
   }
 
   load() {
@@ -54,30 +64,32 @@ export class Products {
       });
   }
 
+  // Updates the URL; the queryParamMap subscription does the reload
+  private updateUrl(changes: Record<string, string | number | null>) {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: changes,
+      queryParamsHandling: 'merge',
+    });
+  }
+
   pickCategory(slug: string) {
-    this.selectedCategory.set(slug);
-    this.page.set(1);
-    this.load();
+    this.updateUrl({ category: slug || null, page: null });
   }
 
   onSearch(value: string) {
     clearTimeout(this.searchTimer);
     this.searchTimer = setTimeout(() => {
-      this.search.set(value);
-      this.page.set(1);
-      this.load();
+      this.updateUrl({ search: value || null, page: null });
     }, 300);
   }
 
   onOrdering(value: string) {
-    this.ordering.set(value);
-    this.page.set(1);
-    this.load();
+    this.updateUrl({ ordering: value === 'name' ? null : value, page: null });
   }
 
   goTo(p: number) {
-    this.page.set(p);
-    this.load();
+    this.updateUrl({ page: p === 1 ? null : p });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 

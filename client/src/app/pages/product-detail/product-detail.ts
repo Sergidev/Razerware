@@ -3,6 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { KeyValuePipe } from '@angular/common';
 import { CatalogService } from '../../catalog.service';
 import { ProductDetail } from '../../models';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-product-detail',
@@ -13,10 +14,15 @@ import { ProductDetail } from '../../models';
 export class ProductDetailPage {
   private route = inject(ActivatedRoute);
   private catalog = inject(CatalogService);
+  private location = inject(Location);
 
   product = signal<ProductDetail | null>(null);
   loading = signal(true);
   notFound = signal(false);
+
+  back() {
+  this.location.back();
+  }
 
   constructor() {
     const slug = this.route.snapshot.paramMap.get('slug')!;

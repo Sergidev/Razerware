@@ -2,9 +2,10 @@
   <h1>Products</h1>
 
   <div class="toolbar">
-    <input class="search" type="search" placeholder="Search by name, brand..."
-           (input)="onSearch($any($event.target).value)" />
-    <select class="sort" (change)="onOrdering($any($event.target).value)">
+    <input class="search" type="search" placeholder="Search by name, brand..." 
+      [value]="search()"
+      (input)="onSearch($any($event.target).value)" />
+    <select class="sort" [value]="ordering()" (change)="onOrdering($any($event.target).value)">
       <option value="name">Name A-Z</option>
       <option value="price">Price: low to high</option>
       <option value="-price">Price: high to low</option>
@@ -14,42 +15,42 @@
 
   <div class="chips">
     <button type="button" class="chip" [class.active]="selectedCategory() === ''"
-            (click)="pickCategory('')">All</button>
+      (click)="pickCategory('')">All</button>
     @for (c of categories(); track c.id) {
-      <button type="button" class="chip" [class.active]="selectedCategory() === c.slug"
-              (click)="pickCategory(c.slug)">{{ c.name }} ({{ c.product_count }})</button>
+    <button type="button" class="chip" [class.active]="selectedCategory() === c.slug" (click)="pickCategory(c.slug)">{{
+      c.name }} ({{ c.product_count }})</button>
     }
   </div>
 
   @if (error()) {
-    <p class="state">Could not load products. The server may be waking up, try again in a few seconds.</p>
+  <p class="state">Could not load products. The server may be waking up, try again in a few seconds.</p>
   } @else if (loading()) {
-    <p class="state">Loading products...</p>
+  <p class="state">Loading products...</p>
   } @else if (products().length === 0) {
-    <p class="state">No products match your search.</p>
+  <p class="state">No products match your search.</p>
   } @else {
-    <div class="grid">
-      @for (p of products(); track p.id) {
-        <a class="card-p" [routerLink]="['/products', p.slug]">
-          <div class="img-wrap">
-            <img [src]="p.image" [alt]="p.name" loading="lazy" />
-            @if (p.stock === 0) { <span class="badge-out">Out of stock</span> }
-          </div>
-          <div class="card-body">
-            <span class="cat">{{ p.category_name }}</span>
-            <h3>{{ p.name }}</h3>
-            <div class="price">{{ p.price }} €</div>
-          </div>
-        </a>
-      }
-    </div>
-
-    @if (pages.length > 1) {
-      <div class="pager">
-        @for (n of pages; track n) {
-          <button type="button" class="chip" [class.active]="n === page()" (click)="goTo(n)">{{ n }}</button>
-        }
+  <div class="grid">
+    @for (p of products(); track p.id) {
+    <a class="card-p" [routerLink]="['/products', p.slug]">
+      <div class="img-wrap">
+        <img [src]="p.image" [alt]="p.name" loading="lazy" />
+        @if (p.stock === 0) { <span class="badge-out">Out of stock</span> }
       </div>
+      <div class="card-body">
+        <span class="cat">{{ p.category_name }}</span>
+        <h3>{{ p.name }}</h3>
+        <div class="price">{{ p.price }} €</div>
+      </div>
+    </a>
     }
+  </div>
+
+  @if (pages.length > 1) {
+  <div class="pager">
+    @for (n of pages; track n) {
+    <button type="button" class="chip" [class.active]="n === page()" (click)="goTo(n)">{{ n }}</button>
+    }
+  </div>
+  }
   }
 </section>
