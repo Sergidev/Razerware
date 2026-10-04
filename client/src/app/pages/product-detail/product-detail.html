@@ -1,5 +1,5 @@
 <section class="detail">
-  <a routerLink="/products" class="back">← Back to products</a>
+  <a href="javascript:void(0)" class="back" (click)="back()">← Back to products</a>
 
   @if (loading()) {
     <p class="state">Loading...</p>
