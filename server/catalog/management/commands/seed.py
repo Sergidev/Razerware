@@ -74,7 +74,7 @@ KEYBOARDS = [
     ("Strike 75", "Nexora", "Brown tactile", "75%", "Wireless 2.4 GHz / Bluetooth", "RGB", 109.99),
     ("Apex 60", "Hyperion", "Optical linear", "60%", "Wired", "Per-key RGB", 89.99),
     ("X70 Pro", "Spectra", "Hall-effect magnetic", "TKL", "Wired", "Per-key RGB", 169.99),
-    ("Zen Silent", "Zenthor", "Silent linear", "65%", "Wireless 2.4 GHz / Bluetooth", "White backlight", 99.99),
+    ("Zen Silent", "Promotrime", "Silent linear", "65%", "Wireless 2.4 GHz / Bluetooth", "White backlight", 99.99),
     ("Mecha Lite", "Aurora", "Blue clicky", "Full-size", "Wired", "Red backlight", 44.99),
 ]
 
