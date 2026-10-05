@@ -1,15 +1,23 @@
 import logging
 import os
+import time
 
 from google import genai
-from google.genai import types
+from google.genai import errors, types
 from pydantic import BaseModel, Field
 
 from catalog.models import Product
 
 log = logging.getLogger(__name__)
 
-MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+MODELS = [
+    m
+    for m in (
+        os.environ.get("GEMINI_MODEL", "gemini-3.8-flash"),
+        os.environ.get("GEMINI_FALLBACK_MODEL"),
+    )
+    if m
+]
 
 SYSTEM_PROMPT = """You are the Razerware Advisor, the shopping assistant of a gaming hardware store.
 
@@ -46,6 +54,42 @@ def build_catalog_context() -> str:
 
 
 def ask_advisor(messages: list[dict]) -> AdvisorReply:
+    client = genai.Client(
+        api_key=os.environ["GEMINI_API_KEY"],
+        http_options=types.HttpOptions(timeout=8_000),  # ms, so a slow call fails fast
+    )
+
+    contents = [
+        types.Content(
+            role="user" if m["role"] == "user" else "model",
+            parts=[types.Part(text=m["content"])],
+        )
+        for m in messages
+    ]
+
+    config = types.GenerateContentConfig(
+        system_instruction=SYSTEM_PROMPT + build_catalog_context(),
+        response_mime_type="application/json",
+        response_schema=AdvisorReply,
+        temperature=0.4,
+    )
+
+    last_error: Exception | None = None
+    for model in MODELS:
+        for attempt in range(2):
+            try:
+                response = client.models.generate_content(
+                    model=model, contents=contents, config=config
+                )
+                if response.parsed is None:
+                    raise ValueError("Gemini returned an unparsable response")
+                return response.parsed
+            except errors.ServerError as e:  # 5xx: temporary, worth retrying
+                last_error = e
+                log.warning("Gemini %s failed (attempt %s): %s", model, attempt + 1, e)
+                time.sleep(1)
+
+    raise last_error
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 
     contents = [
