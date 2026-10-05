@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     # Third party
     "rest_framework",
     "corsheaders",
-    "catalog"
+    "catalog",
+    "advisor"
 ]
 
 MIDDLEWARE = [
@@ -113,4 +114,6 @@ CORS_ALLOWED_ORIGIN_REGEXES = [r"^https://.*\.app\.github\.dev$"]
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 12,
+    "NUM_PROXIES": 1,  # Render sits behind a proxy; needed to rate-limit by real IP
+    "DEFAULT_THROTTLE_RATES": {"advisor": "20/hour"},
 }

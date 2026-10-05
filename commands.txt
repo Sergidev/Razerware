@@ -9,6 +9,3 @@ python manage.py runserver
 
 cd /workspaces/Razerware/client
 ng serve
-
-
-superuser Razerware1
