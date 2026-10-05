@@ -29,3 +29,13 @@ export interface Page<T> {
   previous: string | null;
   results: T[];
 }
+
+export interface AdvisorProduct extends Product {
+  reason: string;
+}
+
+export interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+  products?: AdvisorProduct[];
+}

@@ -1,0 +1,52 @@
+<section class="advisor">
+  <h1>AI Advisor</h1>
+  <p class="sub">Tell me what you play and your budget. I only recommend products from our real catalog.</p>
+
+  <div class="chat" #scroll>
+    <div class="msg bot">
+      <div class="bubble">Hi! I'm the Razerware Advisor. What will you use your new gear for, and what's your budget?</div>
+    </div>
+
+    @for (m of messages(); track $index) {
+      <div class="msg" [class.user]="m.role === 'user'" [class.bot]="m.role === 'assistant'">
+        <div class="bubble">{{ m.content }}</div>
+
+        @for (p of m.products ?? []; track p.id) {
+          <a class="rec" [routerLink]="['/products', p.slug]">
+            <img [src]="p.image" [alt]="p.name" />
+            <div class="rec-info">
+              <span class="cat">{{ p.category_name }}</span>
+              <strong>{{ p.name }}</strong>
+              <span class="price">{{ p.price }} €</span>
+              <p class="why">{{ p.reason }}</p>
+            </div>
+          </a>
+        }
+      </div>
+    }
+
+    @if (loading()) {
+      <div class="msg bot"><div class="bubble typing"><span></span><span></span><span></span></div></div>
+    }
+  </div>
+
+  @if (error()) { <p class="error">{{ error() }}</p> }
+
+  @if (messages().length === 0) {
+    <div class="chips">
+      @for (s of suggestions; track s) {
+        <button type="button" class="chip" (click)="send(s)">{{ s }}</button>
+      }
+    </div>
+  }
+
+  <div class="composer">
+    <input type="text" maxlength="500" placeholder="Ask the advisor..."
+           [value]="draft()" [disabled]="loading()"
+           (input)="draft.set($any($event.target).value)"
+           (keydown.enter)="send(draft())" />
+    <button type="button" class="btn-glow" [disabled]="loading() || !draft().trim()"
+            (click)="send(draft())">Send</button>
+  </div>
+  <p class="note">Powered by Google Gemini. AI can make mistakes, check the specs before buying.</p>
+</section>
