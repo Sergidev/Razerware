@@ -5,15 +5,33 @@
     </a>
 
     <nav class="nav-links" [class.open]="menuOpen()">
-      <a class="nav-link-rw" routerLink="/" routerLinkActive="active"
-         [routerLinkActiveOptions]="{ exact: true }" (click)="close()">Home</a>
+      <a class="nav-link-rw" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+        (click)="close()">Home</a>
       <a class="nav-link-rw" routerLink="/products" routerLinkActive="active" (click)="close()">Products</a>
       <a class="nav-link-rw" routerLink="/advisor" routerLinkActive="active" (click)="close()">AI Advisor</a>
       <a class="nav-link-rw" routerLink="/about" routerLinkActive="active" (click)="close()">About</a>
     </nav>
 
     <div class="nav-actions">
-      <button type="button" class="btn-ghost">Log in</button>
+      @if (auth.user(); as u) {
+      <div class="user-menu">
+        <button type="button" class="btn-ghost user-btn" (click)="toggleUser()">
+          <span class="avatar">{{ u.username.charAt(0).toUpperCase() }}</span>
+          <span class="uname">{{ u.username }}</span> ▾
+        </button>
+        @if (userMenuOpen()) {
+        <div class="dropdown">
+          <div class="dd-head">
+            <strong>{{ u.username }}</strong>
+            <small>{{ u.email }}</small>
+          </div>
+          <button type="button" class="dd-item danger" (click)="logout()">Log out</button>
+        </div>
+        }
+      </div>
+      } @else {
+      <a routerLink="/login" class="btn-ghost">Log in</a>
+      }
       <button type="button" class="btn-glow small">Cart (0)</button>
       <button type="button" class="burger" (click)="toggleMenu()" aria-label="Toggle menu">☰</button>
     </div>

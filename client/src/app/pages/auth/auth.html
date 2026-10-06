@@ -1,0 +1,66 @@
+<section class="auth">
+  <div class="panel">
+    <h1>{{ mode() === 'login' ? 'Welcome back' : 'Create your account' }}</h1>
+    <p class="sub">
+      {{ mode() === 'login' ? 'Log in to continue to Razerware.' : 'Join Razerware in a few seconds.' }}
+    </p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      @if (mode() === 'register') {
+        <label>
+          Username
+          <input type="text" formControlName="username" autocomplete="username" />
+        </label>
+        @if (form.controls.username.touched && form.controls.username.invalid) {
+          <small class="err">3-30 characters: letters, numbers, dots, dashes or underscores.</small>
+        }
+        @for (e of fieldErrors()['username'] ?? []; track e) { <small class="err">{{ e }}</small> }
+      }
+
+      <label>
+        Email
+        <input type="email" formControlName="email" autocomplete="email" />
+      </label>
+      @if (form.controls.email.touched && form.controls.email.invalid) {
+        <small class="err">Enter a valid email address.</small>
+      }
+      @for (e of fieldErrors()['email'] ?? []; track e) { <small class="err">{{ e }}</small> }
+
+      <label>
+        Password
+        <div class="pw">
+          <input [type]="showPassword() ? 'text' : 'password'" formControlName="password"
+                 [attr.autocomplete]="mode() === 'login' ? 'current-password' : 'new-password'" />
+          <button type="button" class="toggle" (click)="showPassword.set(!showPassword())">
+            {{ showPassword() ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+      </label>
+      @if (mode() === 'register' && form.controls.password.touched && form.controls.password.invalid) {
+        <small class="err">At least 8 characters.</small>
+      }
+      @for (e of fieldErrors()['password'] ?? []; track e) { <small class="err">{{ e }}</small> }
+
+      @if (formError()) { <p class="form-error">{{ formError() }}</p> }
+
+      <button type="submit" class="btn-glow full" [disabled]="loading()">
+        {{ loading() ? 'Please wait...' : mode() === 'login' ? 'Log in' : 'Create account' }}
+      </button>
+    </form>
+
+    <div class="divider"><span>or</span></div>
+
+    <button type="button" class="btn-outline full" [disabled]="loading()" (click)="demo()">
+      Continue as demo user
+    </button>
+    <p class="hint">Instant access, no sign up needed. Made for recruiters.</p>
+
+    <p class="switch">
+      @if (mode() === 'login') {
+        New here? <a routerLink="/register">Create an account</a>
+      } @else {
+        Already have an account? <a routerLink="/login">Log in</a>
+      }
+    </p>
+  </div>
+</section>

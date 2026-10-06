@@ -8,6 +8,8 @@ from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
 
+from datetime import timedelta
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
 
@@ -37,6 +39,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "catalog",
+    "accounts",
     "advisor"
 ]
 
@@ -115,5 +118,11 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 12,
     "NUM_PROXIES": 1,  # Render sits behind a proxy; needed to rate-limit by real IP
-    "DEFAULT_THROTTLE_RATES": {"advisor": "20/hour"},
+    "DEFAULT_AUTHENTICATION_CLASSES": ["rest_framework_simplejwt.authentication.JWTAuthentication",],
+    "DEFAULT_THROTTLE_RATES": {"advisor": "20/hour", "auth": "30/hour"},
+    }
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }
