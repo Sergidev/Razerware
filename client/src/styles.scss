@@ -16,6 +16,8 @@ body {
   scroll-behavior: smooth;
 }
 
+*, *::before, *::after { box-sizing: border-box; }
+
 $accent: var(--rw-accent);
 
 // ---------- Navbar ----------
