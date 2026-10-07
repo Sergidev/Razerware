@@ -1,0 +1,84 @@
+<section class="cart">
+  @switch (step()) {
+    @case ('processing') {
+      <div class="center">
+        <div class="spinner"></div>
+        <h2>Processing your payment...</h2>
+        <p class="muted">Please don't close this page.</p>
+      </div>
+    }
+
+    @case ('done') {
+      @let o = order()!;
+      <div class="center">
+        <div class="check">✓</div>
+        <h1>Order confirmed</h1>
+        <p class="lead">Thank you for your purchase! Your order number is <strong>{{ o.number }}</strong>.</p>
+        <p>
+          We've sent the invoice for your {{ o.items }} item{{ o.items === 1 ? '' : 's' }}
+          ({{ o.total | number: '1.2-2' }} €) to <strong>{{ o.email }}</strong>.
+          You'll receive shipping updates by email.
+        </p>
+        <p class="demo-note">
+          Demo only: this is a portfolio project. No payment was made, no email was sent and
+          nothing will be shipped.
+        </p>
+        <div class="actions">
+          <a routerLink="/products" class="btn-glow">Continue shopping</a>
+          <a routerLink="/advisor" class="btn-outline">Ask the AI advisor</a>
+        </div>
+      </div>
+    }
+
+    @default {
+      <h1>Your cart</h1>
+
+      @if (cart.items().length === 0) {
+        <div class="center empty">
+          <p class="muted">Your cart is empty.</p>
+          <a routerLink="/products" class="btn-glow">Browse products</a>
+        </div>
+      } @else {
+        <div class="layout">
+          <div class="items">
+            @for (i of cart.items(); track i.slug) {
+              <article class="item">
+                <a [routerLink]="['/products', i.slug]"><img [src]="i.image" [alt]="i.name" /></a>
+
+                <div class="info">
+                  <span class="cat">{{ i.category_name }}</span>
+                  <a class="name" [routerLink]="['/products', i.slug]">{{ i.name }}</a>
+                  <span class="unit">{{ i.price | number: '1.2-2' }} € each</span>
+
+                  <div class="qty">
+                    <button type="button" (click)="cart.setQuantity(i.slug, i.quantity - 1)"
+                            aria-label="Decrease quantity">−</button>
+                    <span>{{ i.quantity }}</span>
+                    <button type="button" (click)="cart.setQuantity(i.slug, i.quantity + 1)"
+                            [disabled]="i.quantity >= cart.maxFor(i)"
+                            aria-label="Increase quantity">+</button>
+                  </div>
+                </div>
+
+                <div class="side">
+                  <strong class="line">{{ i.price * i.quantity | number: '1.2-2' }} €</strong>
+                  <button type="button" class="remove" (click)="cart.remove(i.slug)">Remove</button>
+                </div>
+              </article>
+            }
+          </div>
+
+          <aside class="summary">
+            <h2>Order summary</h2>
+            <div class="row"><span>Items ({{ cart.count() }})</span><span>{{ cart.total() | number: '1.2-2' }} €</span></div>
+            <div class="row"><span>Shipping</span><span class="free">Free</span></div>
+            <div class="row total"><span>Total</span><span>{{ cart.total() | number: '1.2-2' }} €</span></div>
+
+            <button type="button" class="btn-glow pay" (click)="pay()">Pay now</button>
+            <p class="demo-note">Demo checkout: no payment details are needed and nothing is charged.</p>
+          </aside>
+        </div>
+      }
+    }
+  }
+</section>

@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../auth.service';
+import { CartService } from '../../cart.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +16,8 @@ export class Navbar {
   menuOpen = signal(false);
   userMenuOpen = signal(false);
 
+  cart = inject(CartService);
+  
   toggleMenu() { this.menuOpen.update((v) => !v); }
   toggleUser() { this.userMenuOpen.update((v) => !v); }
   close() { this.menuOpen.set(false); }

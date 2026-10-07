@@ -4,6 +4,7 @@ import { KeyValuePipe } from '@angular/common';
 import { CatalogService } from '../../catalog.service';
 import { ProductDetail } from '../../models';
 import { Location } from '@angular/common';
+import { CartService } from '../../cart.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -15,13 +16,14 @@ export class ProductDetailPage {
   private route = inject(ActivatedRoute);
   private catalog = inject(CatalogService);
   private location = inject(Location);
-
+  private cart = inject(CartService);
+  added = signal(false);
   product = signal<ProductDetail | null>(null);
   loading = signal(true);
   notFound = signal(false);
 
   back() {
-  this.location.back();
+    this.location.back();
   }
 
   constructor() {
@@ -36,5 +38,11 @@ export class ProductDetailPage {
         this.loading.set(false);
       },
     });
+  }
+
+  addToCart(p: ProductDetail) {
+    this.cart.add(p);
+    this.added.set(true);
+    setTimeout(() => this.added.set(false), 1800);
   }
 }

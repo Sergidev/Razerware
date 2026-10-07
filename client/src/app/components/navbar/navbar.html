@@ -32,7 +32,7 @@
       } @else {
       <a routerLink="/login" class="btn-ghost">Log in</a>
       }
-      <button type="button" class="btn-glow small">Cart (0)</button>
+      <a routerLink="/cart" class="btn-glow small">Cart ({{ cart.count() }})</a>
       <button type="button" class="burger" (click)="toggleMenu()" aria-label="Toggle menu">☰</button>
     </div>
   </div>
